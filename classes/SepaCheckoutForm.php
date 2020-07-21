@@ -273,19 +273,19 @@ class SepaCheckoutForm extends Frontend
 			(
 				'label'     => &$GLOBALS['TL_LANG']['tl_iso_payment']['sepa_holder'],
 				'inputType' => 'text',
-				'eval'      => array('mandatory' => true),
+				'eval'      => array('mandatory' => true, 'autocomplete'=>'off'),
 			),
 			'sepa_iban'   => array
 			(
 				'label'     => &$GLOBALS['TL_LANG']['tl_iso_payment']['sepa_iban'],
 				'inputType' => 'text',
-				'eval'      => array('mandatory' => true, 'rgxp' => 'sepa_iban'),
+				'eval'      => array('mandatory' => true, 'rgxp' => 'sepa_iban', 'autocomplete'=>'off'),
 			),
 			'sepa_bic'    => array
 			(
 				'label'     => &$GLOBALS['TL_LANG']['tl_iso_payment']['sepa_bic'],
 				'inputType' => 'text',
-				'eval'      => array('mandatory' => false, 'rgxp' => 'sepa_bic'),
+				'eval'      => array('mandatory' => false, 'rgxp' => 'sepa_bic', 'autocomplete'=>'off'),
 			),
 			'nextStep'    => array
 			(
