@@ -13,7 +13,6 @@
 
 namespace Gruschit;
 
-use Contao\Encryption;
 use Contao\Frontend;
 use Contao\Widget;
 use Isotope\Module\Checkout;
@@ -143,7 +142,7 @@ class SepaCheckoutForm extends Frontend
 			if ($strName == 'sepa_iban' && ! $objWidget->hasErrors())
 			{
 				$strMasked = SepaPayment::maskIBAN($strValue);
-				$objWidget->value = $objWidget->encrypt ? Encryption::encrypt($strMasked) : $strMasked;
+				$objWidget->value = $strMasked;
 			}
 
 			if ($objWidget->hasErrors())

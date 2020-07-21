@@ -13,7 +13,6 @@
 
 namespace Gruschit;
 
-use Contao\Encryption;
 use Contao\StringUtil;
 use Serializable;
 
@@ -60,9 +59,6 @@ class SepaPaymentBag implements Serializable
 	/**
 	 * Save a value of form field to the bag.
 	 *
-	 * Automatically encrypts the value before saving, if
-	 * encryption is enabled for the form field.
-	 *
 	 * @param string $strKey The name of the form field
 	 * @param string $strValue The value to be saved
 	 */
@@ -82,13 +78,6 @@ class SepaPaymentBag implements Serializable
 				continue;
 			}
 
-			// encrypted value
-			if (isset($arrField['eval']) && isset($arrField['eval']['encrypt']) && $arrField['eval']['encrypt'] == true)
-			{
-				$this->arrData[$strKey] = Encryption::encrypt($strValue);
-				continue;
-			}
-
 			$this->arrData[$strKey] = $strValue;
 		}
 	}
@@ -96,10 +85,9 @@ class SepaPaymentBag implements Serializable
 	/**
 	 * Retrieve all values.
 	 *
-	 * @param bool $blnDecrypt Automatically decrypt values
 	 * @return array
 	 */
-	public function all($blnDecrypt = true)
+	public function all()
 	{
 		$arrData = array();
 		foreach (SepaCheckoutForm::getFieldConfigurations() as $strName => $arrField)
@@ -110,7 +98,7 @@ class SepaPaymentBag implements Serializable
 				continue;
 			}
 
-			$arrData[$strName] = $this->get($strName, $blnDecrypt);
+			$arrData[$strName] = $this->get($strName);
 		}
 
 		return $arrData;
@@ -119,14 +107,10 @@ class SepaPaymentBag implements Serializable
 	/**
 	 * Retrieve a value.
 	 *
-	 * Automatically decrypts an encrypted value, if
-	 * encryption is enabled for the form field.
-	 *
 	 * @param string $strKey The form fields name
-	 * @param bool $blnDecrypt Automatically decrypt value
 	 * @return mixed|null
 	 */
-	public function get($strKey, $blnDecrypt = true)
+	public function get($strKey)
 	{
 		if ( ! isset($this->arrData[$strKey]))
 		{
@@ -139,18 +123,6 @@ class SepaPaymentBag implements Serializable
 			if ($strKey != $strName)
 			{
 				continue;
-			}
-
-			// prevent decryption
-			if ($blnDecrypt != true)
-			{
-				return $this->arrData[$strKey];
-			}
-
-			// decrypt value
-			if (isset($arrField['eval']) && isset($arrField['eval']['encrypt']) && $arrField['eval']['encrypt'] == true)
-			{
-				return Encryption::decrypt($this->arrData[$strKey]);
 			}
 
 			return $this->arrData[$strKey];
