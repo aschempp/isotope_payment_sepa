@@ -184,7 +184,7 @@ class SepaCheckoutForm extends Frontend
 	 */
 	public static function retrieve($strKey)
 	{
-		if ( ! isset($_SESSION['SEPA_PAYMENT']))
+        if ( ! isset($_SESSION['SEPA_PAYMENT']))
 		{
 			return null;
 		}
@@ -279,7 +279,7 @@ class SepaCheckoutForm extends Frontend
 			(
 				'label'     => &$GLOBALS['TL_LANG']['tl_iso_payment']['sepa_iban'],
 				'inputType' => 'text',
-				'eval'      => array('mandatory' => true, 'rgxp' => 'sepa_iban', 'encrypt' => true),
+				'eval'      => array('mandatory' => true, 'rgxp' => 'sepa_iban'),
 			),
 			'sepa_bic'    => array
 			(
