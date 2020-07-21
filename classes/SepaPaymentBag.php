@@ -14,6 +14,7 @@
 namespace Gruschit;
 
 use Contao\Encryption;
+use Contao\StringUtil;
 use Serializable;
 
 /**
@@ -184,7 +185,7 @@ class SepaPaymentBag implements Serializable
 	 */
 	public function unserialize($serialized)
 	{
-		$this->arrData = deserialize($serialized, true);
+		$this->arrData = StringUtil::deserialize($serialized, true);
 	}
 
 }
